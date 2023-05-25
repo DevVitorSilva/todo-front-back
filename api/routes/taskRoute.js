@@ -14,13 +14,13 @@ route.post('/api', e.json(), (req, res) => {
 
     const tarefa = new TaskModel({task});
 
-    // tarefa.save().
-    // then((doc) => {
-    //     console.log(doc);
-    // }).
-    // catch((err) => {
-    //     console.log(`Erro ao salvar o documento: ${err}`);
-    // });
+    tarefa.save().
+    then((doc) => {
+        console.log(doc);
+    }).
+    catch((err) => {
+        console.log(`Erro ao salvar o documento: ${err}`);
+    });
 
     res.send('200');
 });
