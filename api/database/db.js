@@ -1,9 +1,9 @@
-"use strict"
+"use strict";
 
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 async function main () {
-    await mongoose.connect('mongodb://localhost/tarefas')
+    await mongoose.connect('mongodb://localhost/task');
 }
 
 export {
