@@ -2,8 +2,14 @@
 
 import e, { Router } from "express";
 import { TaskModel } from "../models/TaskModel.js";
+import cors from "cors";
 
 const route = Router();
+const corsOptins = {
+    origin: "http://localhost:9000",
+}
+
+route.use(cors(corsOptins))
 
 route.get('/api', async (req, res) => {
     const tasks = await TaskModel.find({});
