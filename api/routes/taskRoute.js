@@ -6,10 +6,10 @@ import cors from "cors";
 
 const route = Router();
 const corsOptins = {
-    origin: "http://localhost:9000",
+    origin: ["http://localhost:9000", 'http://127.0.0.1:5500']
 }
 
-route.use(cors(corsOptins))
+route.use(cors(corsOptins));
 
 route.get('/api', async (req, res) => {
     const tasks = await TaskModel.find({});

@@ -1,7 +1,7 @@
-// const url = 'http://localhost:9000/api'
+"use strict"
 
 function getAll(){
-    fetch('http://127.0.1.1:9000/api').
+    fetch('http://localhost:9000/api', {mode: 'cors'}).
     then((res) => {
         return res.json()
     }).
