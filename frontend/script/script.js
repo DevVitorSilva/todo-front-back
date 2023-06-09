@@ -17,18 +17,19 @@ function getAll() {
                 let taskElement = `
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header bg-warning-subtle">
                             <input type="checkbox">
                             <label class="${element._id}">${element.task}</label>
-                            <button onclick="editTask(this)" id="${element._id}" class="btn btn-primary collapsed" type="button" data-bs-toggle="collapse"
+                            <button onclick="editTask(this)" id="${element._id}" class="btn bg-primary-subtle collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse${index}" aria-expanded="false" aria-controls="flush-collapse${index}">
                                 editar
                             </button>
+                            <button onclick="deleteTask(this)" class="${element._id} btn bg-danger-subtle">delete</button>
                         </div>
-                        <div id="flush-collapse${index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div id="flush-collapse${index}" class="accordion-collapse collapse bg-warning-subtle" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
-                                <textarea class="${element._id}" cols="30" rows="5"></textarea>
-                                <button onclick="getOne(this)" id="${element._id}" class="btn btn-primary collapsed" type="button" data-bs-toggle="collapse"
+                                <textarea class="${element._id} border border-black-subtle rounded p-2" cols="25" rows="5" style="resize: none"></textarea>
+                                <button onclick="getOne(this)" id="${element._id}" class="btn bg-primary-subtle collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse${index}" aria-expanded="false" aria-controls="flush-collapse${index}">Add edit</button>
                             </div>
                         </div>
@@ -76,7 +77,7 @@ function addTask() {
 
 async function getOne(element) {
     const id = element.id
-    const newTask = document.getElementsByClassName(id)[1].value
+    const newTask = document.getElementsByClassName(id)[2].value
     const data = {
         id: id,
         task: newTask
@@ -103,7 +104,29 @@ function editTask(element){
     const id = element.id
     const classTask = document.getElementsByClassName(id)[0].textContent
     
-    document.getElementsByClassName(id)[1].value = classTask
+    document.getElementsByClassName(id)[2].value = classTask
     
 }
 
+function deleteTask(element){
+    const id = element.attributes[1].ownerElement.classList[0]
+    const data = {
+        id: id
+    }
+    const options = {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }
+
+    fetch(`http://localhost:9000/api`, options)
+    .then((res) => {
+        getAll()
+    })
+    .catch((err) => {
+        console.log(`Error delete: ${err}`)
+    })
+
+}
